@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/m4s-b3n/semrel-test/compare/1.0.0...1.1.0) (2025-06-24)
+
+
+### Features
+
+* extend workflow ([7071367](https://github.com/m4s-b3n/semrel-test/commit/70713674f90ff4eb9211bc44b2dc82a5f8d6ce03))
+
 # 1.0.0 (2025-06-24)
 
 
