@@ -32,6 +32,8 @@ jobs:
       contents: write
       issues: write
       pull-requests: write
+    outputs:
+      tag: ${{ steps.semrel.outputs.new_release_git_tag }}
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -45,7 +47,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   
-  after-n:
+  after:
     name: After Release (normal)
     needs:
       - release
@@ -58,32 +60,27 @@ jobs:
       - name: Git Log
         run: git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
-  after-m:
-    name: After Release (modified)
+  after-matrix:
+    name: After Release (latest)
     needs:
       - release
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      matrix:
+        include:
+          - name: latest
+            ref: ${{ github.ref }}
+          - name: empty
+            ref: 
+          - name: none
+          - name: tag
+            ref: ${{ needs.release.outputs.tag }}
     steps:
-      - name: Checkout
+      - name: Checkout ${{ matrix.name }}
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
-      - name: Git Log
-        run: git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-
-  after-e:
-    name: After Release (empty)
-    needs:
-      - release
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: ""
+          ref: ${{ matrix.ref }}
       - name: Git Log
         run: git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
