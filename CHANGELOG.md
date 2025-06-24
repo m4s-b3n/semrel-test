@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/m4s-b3n/semrel-test/compare/1.1.0...1.2.0) (2025-06-24)
+
+
+### Features
+
+* extend workflow for matrix ([00b86dd](https://github.com/m4s-b3n/semrel-test/commit/00b86dd922fd5c069a050107f5ad61687577bdbb))
+
 # [1.1.0](https://github.com/m4s-b3n/semrel-test/compare/1.0.0...1.1.0) (2025-06-24)
 
 
